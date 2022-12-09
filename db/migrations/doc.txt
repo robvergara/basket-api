@@ -1,0 +1,14 @@
+sirven para crear y modificar tablas y sus relaciones de forma controlada a diferencia del sequelize.sync()
+
+ejemplo
+
+up:
+crear: await queryInterface.createTable(TABLE, schema);
+agregar columnas: await queryInterface.addColumn(TABLE, 'columnaNueva', schema.columnaNueva);
+modificar columna: await queryInterface.changeColumn(TABLE, 'columna a modificar', {
+    reglas del esquema que se modifican a mano
+})
+
+down:
+regresar un estado de columna: await queryInterface.drop(TABLE);
+remover columna: await queryInterface.removeColumn(TABLE, 'columnaNueva');
