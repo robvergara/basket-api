@@ -1,3 +1,4 @@
+const { array } = require('joi');
 const Joi = require('joi');
 
 // const id = Joi.string().uuid();
@@ -13,7 +14,33 @@ const favorPoints = Joi.number().integer();
 const againstPoints = Joi.number().integer();
 const points = Joi.number().integer();
 const championshipId = Joi.number().integer();
+const name_ = Joi.string().min(3).max(15);
+const lastName = Joi.string().min(3).max(15);
+const position = Joi.string();
+const annotations = Joi.number().integer();
+const triples = Joi.number().integer();
+const teamId = Joi.number().integer();
+const name_coach= Joi.string().min(3).max(15);
+const lastName_coach = Joi.string().min(3).max(15);
 
+
+const playerSchema = Joi.object({
+    name:name_.required(),
+    lastName: lastName.required(),
+    position: position.required(),
+    annotations: annotations.required(),
+    triples: triples.required(),
+    teamId: id
+})
+
+const coachSchema = Joi.object({
+    name:name_coach.required(),
+    lastName: lastName_coach.required(),
+    teamId: id
+})
+
+const players = Joi.array().items(playerSchema).min(1).unique().required();
+const Coach = Joi.array().items(coachSchema).min(1).unique().required();
 
 const createTeamSchema = Joi.object({
     name: name.required(),
@@ -27,7 +54,10 @@ const createTeamSchema = Joi.object({
     points: points.required(),
     image: image,
     championshipId: championshipId.required(),
+    players,
+    Coach
 });
+
 
 const updateTeamSchema = Joi.object({
     name:name,

@@ -8,20 +8,22 @@ class teamService {
     }
 
     async create(data){
-        const newTeam = models.Team.create(data);
+        const newTeam = models.Team.create(data, {
+            include: ['players', 'Coach']
+        });
         return newTeam;
     }
 
     async find(){
         const rta = await models.Team.findAll({
-            include: ['championship','players', 'Coach']
+            include: ['championship']
         });
         return rta;
     }
 
     async findOne(id){
         const team = await models.Team.findByPk(id, {
-            include: ['players']
+            include: ['players','Coach']
         })
         if(!team){
             throw boom.notFound('team not found');
